@@ -37,7 +37,11 @@ export default {
         console.log('No user is signed in.')
       }
     })
-    this.listen()
+    this.boardRef = firebase.database().ref('myBoard');
+    let self = this;
+    this.boardRef.on('value', function(snapshot) {
+       self.list = snapshot.val();
+    });
   },
 
   methods: {
@@ -55,26 +59,12 @@ export default {
         console.log('ログインエラーメッセージ', errorCode, errorMessage)
       });
     },
-    // データベースの変更を購読、最新状態をlistにコピーする
-    listen () {
-      firebase.database().ref('myBoard/').on('value', snapshot => {
-        if (snapshot) {
-          const rootList = snapshot.val()
-          let list = []
-          Object.keys(rootList).forEach((val, key) => {
-            rootList[val].id = val
-            list.push(rootList[val])
-          })
-          this.list = list
-        }
-      })
-    },
     // ダミーデータをfirebaseに送信
     pushData () {
-      firebase.database().ref('myBoard/').push({
-        name: 'test',
-        message: 'hoge'
-      }).then(this.listen())
+      this.boardRef.push({
+          name: 'test',
+          message: 'hoge'
+      })
     },
   },
 
