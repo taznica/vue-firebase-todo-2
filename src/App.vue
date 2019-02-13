@@ -50,7 +50,6 @@ export default {
       firebase.auth().signInAnonymously().then(e => {
         // eslint-disable-next-line
         console.log(e)
-        this.listen()
       }).catch((error) => {
         // ログインのエラーメッセージ
         var errorCode = error.code;
