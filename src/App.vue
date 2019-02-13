@@ -24,7 +24,6 @@ export default {
   name: 'app',
   components: {},
 
-
   created() {
     firebase.auth().onAuthStateChanged( user => {
       if (user) {
@@ -36,9 +35,9 @@ export default {
         // eslint-disable-next-line
         console.log('No user is signed in.')
       }
-    })
+    });
     this.boardRef = firebase.database().ref('myBoard');
-    let self = this;
+    const self = this;
     this.boardRef.on('value', function(snapshot) {
        self.list = snapshot.val();
     });
@@ -52,8 +51,8 @@ export default {
         console.log(e)
       }).catch((error) => {
         // ログインのエラーメッセージ
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        const errorMessage = error.message;
+        const errorCode = error.code;
         // eslint-disable-next-line
         console.log('ログインエラーメッセージ', errorCode, errorMessage)
       });
@@ -71,7 +70,7 @@ export default {
     return {
       list: []
     }
-  },
+  }
 }
 </script>
 
