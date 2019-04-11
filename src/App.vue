@@ -10,7 +10,12 @@
     </div>
     <div>
       <ul v-for="item in list" :key="item.name">
-        <li>{{item.name}} / {{item.message}}</li>
+        <li>
+          <button type="button" class="btn btn-default" @click="toggleStatus(item)">
+            {{String(item.status)}}
+          </button>
+          {{item.name}}
+        </li>
       </ul>
     </div>
   </div>
@@ -36,9 +41,9 @@ export default {
         console.log('No user is signed in.')
       }
     });
-    this.boardRef = firebase.database().ref('myBoard');
+    this.itemsRef = firebase.database().ref('items');
     const self = this;
-    this.boardRef.on('value', function(snapshot) {
+    this.itemsRef.on('value', function(snapshot) {
        self.list = snapshot.val();
     });
   },
@@ -59,11 +64,18 @@ export default {
     },
     // ダミーデータをfirebaseに送信
     pushData () {
-      this.boardRef.push({
-          name: 'test',
-          message: 'hoge'
+      this.itemsRef.push({
+        name: 'hoge',
+        status: false
       })
     },
+
+    toggleStatus (item) {
+      firebase.database().ref('items/' + item.name).update({
+        name: item.name,
+        status: !item.status
+      })
+    }
   },
 
   data() {

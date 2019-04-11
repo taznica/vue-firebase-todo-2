@@ -1,0 +1,20 @@
+{
+  "items" : {
+    "itemA" : {
+      "name" : "itemA",
+      "status" : false
+    },
+    "itemB" : {
+      "name" : "itemB",
+      "status" : false
+    },
+    "itemC" : {
+      "name" : "itemC",
+      "status" : false
+    },
+    "itemD" : {
+      "name" : "itemD",
+      "status" : false
+    }
+  }
+}
